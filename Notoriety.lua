@@ -1,4 +1,3 @@
-
 if _G.created ~= true then
 	_G.created = true
 	------[Item initialization]------
@@ -10,14 +9,19 @@ if _G.created ~= true then
 	local glass = Instance.new("TextButton")
 	local van = Instance.new("TextButton")
 	local speed = Instance.new("TextBox")
-	local Label = Instance.new("TextLabel")
+	local speedLabel = Instance.new("TextLabel")
 	local jump = Instance.new("TextBox")
-	local Label_2 = Instance.new("TextLabel")
+	local jumpLabel = Instance.new("TextLabel")
 	local infjump = Instance.new("TextButton")
 	local toggleWalk = Instance.new("TextButton")
 	local toggleJump = Instance.new("TextButton")
+	local instaComplete = Instance.new("TextButton")
+	local infAmmo = Instance.new("TextButton")
+	local God = Instance.new("TextButton")
+	local infEquip = Instance.new("TextButton")
+	local tpSafe = Instance.new("TextButton")
 	local closed = Instance.new("Frame")
-	local openButton = Instance.new("TextButton")
+	local open = Instance.new("TextButton")
 
 	-- Toggle button values
 	local speedBool = false
@@ -25,6 +29,18 @@ if _G.created ~= true then
 	local speedVal = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
 	local jumpVal = game.Workspace.Gravity
 	local infJumpBool = false
+
+	------[FUNCTIONS]------
+	function tp(x,y,z)
+	local plr = game.Players.LocalPlayer
+	local dis = (plr.Character.Torso.Position - Vector3.new(x,y,z)).Magnitude
+	local time = dis/14
+    local tweenService = game:GetService("TweenService")
+	local tweenInfo = TweenInfo.new(time, Enum.EasingStyle.Linear)
+    local tween = tweenService:Create(plr.Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(x,y,z)})
+    	tween:Play()
+		tween.Completed:Wait()
+	end
 
 	---- Main Properties
 	hackgui.Name = "hackgui"
@@ -118,7 +134,8 @@ if _G.created ~= true then
 	van.TextColor3 = Color3.fromRGB(255, 255, 255)
 	van.TextSize = 22.000
 	van.MouseButton1Down:connect(function()
-
+		local vanpos = game.Workspace.BagSecuredArea.EscapeVan.Main1.Position
+		tp(vanpos.X, vanpos.Y + 2, vanpos.Z)
 	end)
 
 	-- Speed Increment
@@ -133,18 +150,18 @@ if _G.created ~= true then
 	speed.TextColor3 = Color3.fromRGB(255, 255, 255)
 	speed.TextSize = 22.000
 
-	Label.Name = "Label"
-	Label.Parent = speed
-	Label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Label.BackgroundTransparency = 100.000
-	Label.Position = UDim2.new(1.01398969, 0, -0.0257314052, 0)
-	Label.Size = UDim2.new(0, 191, 0, 30)
-	Label.Font = Enum.Font.SourceSans
-	Label.Text = "Walk Speed"
-	Label.TextColor3 = Color3.fromRGB(255, 255, 255)
-	Label.TextSize = 22.000
-	Label.TextWrapped = true
-	Label.TextXAlignment = Enum.TextXAlignment.Left
+	speedLabel.Name = "Label"
+	speedLabel.Parent = speed
+	speedLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	speedLabel.BackgroundTransparency = 100.000
+	speedLabel.Position = UDim2.new(1.01398969, 0, -0.0257314052, 0)
+	speedLabel.Size = UDim2.new(0, 191, 0, 30)
+	speedLabel.Font = Enum.Font.SourceSans
+	speedLabel.Text = "Walk Speed"
+	speedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	speedLabel.TextSize = 22.000
+	speedLabel.TextWrapped = true
+	speedLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 	-- Jump increment
 	jump.Name = "jump"
@@ -158,18 +175,18 @@ if _G.created ~= true then
 	jump.TextColor3 = Color3.fromRGB(255, 255, 255)
 	jump.TextSize = 22.000
 
-	Label_2.Name = "Label"
-	Label_2.Parent = jump
-	Label_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Label_2.BackgroundTransparency = 100.000
-	Label_2.Position = UDim2.new(1.01398969, 0, -0.0257314052, 0)
-	Label_2.Size = UDim2.new(0, 191, 0, 30)
-	Label_2.Font = Enum.Font.SourceSans
-	Label_2.Text = "Jump Power"
-	Label_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-	Label_2.TextSize = 22.000
-	Label_2.TextWrapped = true
-	Label_2.TextXAlignment = Enum.TextXAlignment.Left
+	jumpLabel.Name = "Label"
+	jumpLabel.Parent = jump
+	jumpLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	jumpLabel.BackgroundTransparency = 100.000
+	jumpLabel.Position = UDim2.new(1.01398969, 0, -0.0257314052, 0)
+	jumpLabel.Size = UDim2.new(0, 191, 0, 30)
+	jumpLabel.Font = Enum.Font.SourceSans
+	jumpLabel.Text = "Jump Power"
+	jumpLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	jumpLabel.TextSize = 22.000
+	jumpLabel.TextWrapped = true
+	jumpLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 	-- Allow infinite jumping
 	infjump.Name = "infjump"
@@ -177,7 +194,7 @@ if _G.created ~= true then
 	infjump.BackgroundColor3 = Color3.fromRGB(231, 90, 9)
 	infjump.BorderColor3 = Color3.fromRGB(255, 95, 9)
 	infjump.BorderSizePixel = 0
-	infjump.Position = UDim2.new(0.0105251521, 0, 0.374775529, 0)
+	infjump.Position = UDim2.new(0.0121458918, 0, 0.454516947, 0)
 	infjump.Size = UDim2.new(0, 205, 0, 34)
 	infjump.ZIndex = 0
 	infjump.AutoButtonColor = false
@@ -253,6 +270,81 @@ if _G.created ~= true then
 		end
 	end)
 
+	instaComplete.Name = "instaComplete"
+	instaComplete.Parent = main
+	instaComplete.BackgroundColor3 = Color3.fromRGB(231, 90, 9)
+	instaComplete.BorderColor3 = Color3.fromRGB(255, 95, 9)
+	instaComplete.BorderSizePixel = 0
+	instaComplete.Position = UDim2.new(0.0121458769, 0, 0.756241024, 0)
+	instaComplete.Size = UDim2.new(0, 205, 0, 34)
+	instaComplete.ZIndex = 0
+	instaComplete.AutoButtonColor = false
+	instaComplete.Style = Enum.ButtonStyle.RobloxRoundButton
+	instaComplete.Font = Enum.Font.SourceSans
+	instaComplete.Text = "Insta Complete: Off"
+	instaComplete.TextColor3 = Color3.fromRGB(255, 255, 255)
+	instaComplete.TextSize = 22.000
+
+	infAmmo.Name = "infAmmo"
+	infAmmo.Parent = main
+	infAmmo.BackgroundColor3 = Color3.fromRGB(231, 90, 9)
+	infAmmo.BorderColor3 = Color3.fromRGB(255, 95, 9)
+	infAmmo.BorderSizePixel = 0
+	infAmmo.Position = UDim2.new(0.0121458769, 0, 0.529947937, 0)
+	infAmmo.Size = UDim2.new(0, 205, 0, 34)
+	infAmmo.ZIndex = 0
+	infAmmo.AutoButtonColor = false
+	infAmmo.Style = Enum.ButtonStyle.RobloxRoundButton
+	infAmmo.Font = Enum.Font.SourceSans
+	infAmmo.Text = "Infinite Ammo: Off"
+	infAmmo.TextColor3 = Color3.fromRGB(255, 255, 255)
+	infAmmo.TextSize = 22.000
+
+	God.Name = "God"
+	God.Parent = main
+	God.BackgroundColor3 = Color3.fromRGB(231, 90, 9)
+	God.BorderColor3 = Color3.fromRGB(255, 95, 9)
+	God.BorderSizePixel = 0
+	God.Position = UDim2.new(0.0121458769, 0, 0.680809915, 0)
+	God.Size = UDim2.new(0, 205, 0, 34)
+	God.ZIndex = 0
+	God.AutoButtonColor = false
+	God.Style = Enum.ButtonStyle.RobloxRoundButton
+	God.Font = Enum.Font.SourceSans
+	God.Text = "God: Off"
+	God.TextColor3 = Color3.fromRGB(255, 255, 255)
+	God.TextSize = 22.000
+
+	infEquip.Name = "infEquip"
+	infEquip.Parent = main
+	infEquip.BackgroundColor3 = Color3.fromRGB(231, 90, 9)
+	infEquip.BorderColor3 = Color3.fromRGB(255, 95, 9)
+	infEquip.BorderSizePixel = 0
+	infEquip.Position = UDim2.new(0.0121458918, 0, 0.605379045, 0)
+	infEquip.Size = UDim2.new(0, 205, 0, 34)
+	infEquip.ZIndex = 0
+	infEquip.AutoButtonColor = false
+	infEquip.Style = Enum.ButtonStyle.RobloxRoundButton
+	infEquip.Font = Enum.Font.SourceSans
+	infEquip.Text = "Infinite Equipment: Off"
+	infEquip.TextColor3 = Color3.fromRGB(255, 255, 255)
+	infEquip.TextSize = 22.000
+
+	tpSafe.Name = "tpSafe"
+	tpSafe.Parent = main
+	tpSafe.BackgroundColor3 = Color3.fromRGB(231, 90, 9)
+	tpSafe.BorderColor3 = Color3.fromRGB(255, 95, 9)
+	tpSafe.BorderSizePixel = 0
+	tpSafe.Position = UDim2.new(0.00890444499, 0, 0.374775559, 0)
+	tpSafe.Size = UDim2.new(0, 205, 0, 34)
+	tpSafe.ZIndex = 0
+	tpSafe.AutoButtonColor = false
+	tpSafe.Style = Enum.ButtonStyle.RobloxRoundButton
+	tpSafe.Font = Enum.Font.SourceSans
+	tpSafe.Text = "TP to Safe"
+	tpSafe.TextColor3 = Color3.fromRGB(255, 255, 255)
+	tpSafe.TextSize = 22.000
+
 	-- Open gui button
 	closed.Name = "closed"
 	closed.Parent = hackgui
@@ -261,47 +353,48 @@ if _G.created ~= true then
 	closed.Size = UDim2.new(0, 45, 0, 45)
 	closed.Style = Enum.FrameStyle.RobloxRound
 	closed.Visible = false
-
-	openButton.Parent = closed
-	openButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	openButton.BackgroundTransparency = 1.000
-	openButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
-	openButton.Position = UDim2.new(-0.24444446, 0, -0.24444446, 0)
-	openButton.Size = UDim2.new(0, 45, 0, 45)
-	openButton.Font = Enum.Font.SourceSansBold
-	openButton.Text = "+"
-	openButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-	openButton.TextScaled = true
-	openButton.TextSize = 22.000
-	openButton.TextWrapped = true
-	openButton.MouseButton1Down:connect(function()
+	open.Parent = closed
+	open.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	open.BackgroundTransparency = 1.000
+	open.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	open.Position = UDim2.new(-0.24444446, 0, -0.24444446, 0)
+	open.Size = UDim2.new(0, 45, 0, 45)
+	open.Font = Enum.Font.SourceSansBold
+	open.Text = "+"
+	open.TextColor3 = Color3.fromRGB(255, 255, 255)
+	open.TextScaled = true
+	open.TextSize = 22.000
+	open.TextWrapped = true
+	open.MouseButton1Down:connect(function()
 		main.Visible = true
 		closed.Visible = false
 	end)
 
 	------[Hack loop]------
 	if _G.running ~= true then
-		_G.running = true
-		while wait() do
-			-- loop functions
-			-- infStamina
-			game.Workspace.Criminals[game.Players.LocalPlayer.Name].Stamina.Value = 2 ^ 60
+  	_G.running = true
+  		while wait() do
+  			-- Infinite Stamina
+  			game.Workspace.Criminals[game.Players.LocalPlayer.Name].Stamina.Value = 2 ^ 60
+
 			-- Jump Update
-			if jumpBool == true then
-				local newjump = tonumber(jump.Text)
-				if newjump == nil then
-					newjump = jumpVal
-				end
-				game.Workspace.Gravity = newjump
-			end
+  			if jumpBool == true then
+  				local newjump = tonumber(jump.Text)
+  				if newjump == nil then
+  					newjump = jumpVal
+  				end
+  				game.Workspace.Gravity = newjump
+  			end
+
 			-- Speed Updata
-			if speedBool == true then
-				local newspeed = tonumber(speed.Text)
-				if newspeed == nil then
-					newspeed = speedVal
-				end
-				game.Workspace.Criminals[game.Players.LocalPlayer.Name].BaseSpeed.Value = newspeed
-			end
-		end
-	end
+  			if speedBool == true then
+  				local newspeed = tonumber(speed.Text)
+  				if newspeed == nil then
+  					newspeed = speedVal
+  				end
+  				game.Workspace.Criminals[game.Players.LocalPlayer.Name].BaseSpeed.Value = newspeed
+  			end
+
+  		end
+  	end
 end
