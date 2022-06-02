@@ -29,12 +29,13 @@ if _G.created ~= true then
 	local speedVal = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
 	local jumpVal = game.Workspace.Gravity
 	local infJumpBool = false
+	local tpspeed = 50
 
 	------[FUNCTIONS]------
 	function tp(x,y,z)
 	local plr = game.Players.LocalPlayer
 	local dis = (plr.Character.Torso.Position - Vector3.new(x,y,z)).Magnitude
-	local time = dis/14
+	local time = dis / tpspeed
     local tweenService = game:GetService("TweenService")
 	local tweenInfo = TweenInfo.new(time, Enum.EasingStyle.Linear)
     local tween = tweenService:Create(plr.Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(x,y,z)})
