@@ -134,7 +134,7 @@ if _G.created ~= true then
 	van.TextColor3 = Color3.fromRGB(255, 255, 255)
 	van.TextSize = 22.000
 	van.MouseButton1Down:connect(function()
-		local vanpos = game.Workspace.BagSecuredArea.EscapeVan.Main1.Position
+		local vanpos = game.Workspace.BagSecuredArea.EscapeVan.Main.Position
 		tp(vanpos.X, vanpos.Y + 2, vanpos.Z)
 	end)
 
