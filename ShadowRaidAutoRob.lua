@@ -1,4 +1,24 @@
+--========================== DO NOT MOVE WHILE SCRIPT IS EXCUTING=============================--
+
+----------[[ CHANGELOG ]] ----------
+--[[
+
+File setup:
+	1. _G.solo = true
+	2. _G.reset = false
+	3. loadstring(game:HttpGet("https://raw.githubusercontent.com/4rmy/RobloxScripts/main/ShadowRaidAutoRob.lua"))()
+
+IF _G.solo is set to true RUN CODE AT HEIST READY SCREEN
+IF _G.reset is set to true IT WILL RESTART THE HEIST AT WHEN TO ROBBERY IS OVER
+
+]]--
+------------------------------------
+
 local tpspeed = 50
+
+if _G.solo == nil then _G.solo = false end
+if _G.reset == nil then _G.reset = false end
+
 
 function start()
 	if _G.solo == true then
