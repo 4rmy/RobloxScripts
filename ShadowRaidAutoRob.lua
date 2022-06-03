@@ -1,9 +1,7 @@
 local tpspeed = 50
-local solo = true
-local reset = true
 
 function start()
-	if solo == true then
+	if _G.solo == true then
 		game:GetService("ReplicatedStorage").RS_Package.Remotes.PlayerReady:FireServer("Class 1", true)
 		wait(12)
 	end
@@ -16,7 +14,7 @@ function start()
 	sendNoti("Process Finished!")
 	wait(2)
 	tpVan()
-	if reset == true then
+	if _G.reset == true then
 		wait(3)
 		game:GetService("ReplicatedStorage").RS_Package.Remotes.VoteReset:FireServer()
 	else
