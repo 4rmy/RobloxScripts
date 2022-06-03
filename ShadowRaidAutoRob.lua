@@ -1,12 +1,27 @@
+local tpspeed = 50
+local solo = true
+local reset = true
+
 function start()
+	if solo == true then
+		game:GetService("ReplicatedStorage").RS_Package.Remotes.PlayerReady:FireServer("Class 1", true)
+		wait(12)
+	end
 	sendNoti("Process Started!")
 	getCrowbar()
 	openCrates()
-	maskOn()
 	lootSafes()
 	smallLoot()
 	bigLoot()
 	sendNoti("Process Finished!")
+	wait(2)
+	tpVan()
+	if reset == true then
+		wait(3)
+		game:GetService("ReplicatedStorage").RS_Package.Remotes.VoteReset:FireServer()
+	else
+		say()
+	end
 end
 
 function sendNoti(tex)
@@ -35,9 +50,13 @@ function getCrowbar()
 end
 
 function openCrates()
-	local boxes = game.Workspace.Map.ShadowBoxes
-	while boxes:FindFirstChild("RandomCrate") ~= nil and wait() do
-		interact(boxes:FindFirstChild("RandomCrate").Spacer.ProximityPrompt)
+	local boxes = game.Workspace.Map.ShadowBoxes:GetChildren()
+	for i = 1, #boxes do
+		if boxes[i]:FindFirstChild("Spacer") ~= nil then
+			if boxes[i].Spacer:FindFirstChild("ProximityPrompt") ~= nil then
+				interact(boxes[i].Spacer.ProximityPrompt)
+			end
+		end
 	end
 end
 
@@ -48,17 +67,19 @@ function maskOn()
 end
 
 function lootSafes()
-	local safes = game.Workspace.SafeSpots:GetChildren()
+	local child = game.Workspace.SafeSpots:GetChildren()
+	local safes = {}
+	for i = 1, #child do
+		if child[i].Name ~= "SafesScript" then
+			table.insert(safes, child[i])
+		end
+	end
 	for i = 1, #safes do
-		if safes[i].Name ~= "SafesScript" then
-			local parts = safes[i]:GetChildren()
-			for j = 1, #parts do
-				if parts[j].Name == "Union" then
-					local promt = parts[j]:FindFirstChild("ProximityPrompt")
-					if prompt ~= nil then
-						interact(prompt)
-					end
-				end
+		local p = safes[i]:GetChildren()
+		for j = 1, #p do
+			local prompt = p[j]:FindFirstChild("ProximityPrompt")
+			if prompt ~= nil then
+				interact(prompt)
 			end
 		end
 	end
@@ -113,9 +134,36 @@ function bigLoot()
 			break
 		end
 
-		game:GetService("ReplicatedStorage").RS_Package.Remotes.ThrowBag:FireServer(Vector3.new(0, 0, 0))
+		game:GetService("ReplicatedStorage").RS_Package.Remotes.ThrowBag:FireServer(Vector3.new(0.17, 0.2, -1))
 		loot = game.Workspace.BigLoot:GetChildren()
 	end
+	game:GetService("ReplicatedStorage").RS_Package.Remotes.ThrowBag:FireServer(Vector3.new(0.17, 0.2, -1))
+end
+
+function say()
+	local args = {
+		[1] = "Ok, you can come in",
+		[2] = "All"
+	}
+
+	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+
+end
+
+function tp(x,y,z)
+	local plr = game.Players.LocalPlayer
+	local dis = (plr.Character.Torso.Position - Vector3.new(x,y,z)).Magnitude
+	local time = dis / tpspeed
+	local tweenService = game:GetService("TweenService")
+	local tweenInfo = TweenInfo.new(time, Enum.EasingStyle.Linear)
+	local tween = tweenService:Create(plr.Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(x,y,z)})
+	tween:Play()
+	tween.Completed:Wait()
+end
+
+function tpVan()
+	local pos = game.Workspace.BagSecuredArea.EscapeVan:FindFirstChild("MainMesh").Position
+	tp(pos.X, pos.Y, pos.Z)
 end
 
 start()
