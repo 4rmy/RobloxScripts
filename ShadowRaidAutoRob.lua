@@ -9,6 +9,7 @@ File setup:
 	3. loadstring(game:HttpGet("https://raw.githubusercontent.com/4rmy/RobloxScripts/main/ShadowRaidAutoRob.lua"))()
 
 IF _G.solo is set to true RUN CODE AT HEIST READY SCREEN
+	It will auto-ready up
 IF _G.reset is set to true IT WILL RESTART THE HEIST AT WHEN TO ROBBERY IS OVER
 
 ]]--
@@ -31,6 +32,7 @@ function start()
 	lootSafes()
 	smallLoot()
 	bigLoot()
+	getSamuri()
 	sendNoti("Process Finished!")
 	wait(2)
 	tpVan()
@@ -62,12 +64,14 @@ function interact(x)
 end
 
 function getCrowbar()
+	sendNoti("Getting crowbar...")
 	local crowbar = game.Workspace.Map.Crowbars:FindFirstChild("Crowbar")
 	local prompt = crowbar:FindFirstChild("Handle"):FindFirstChild("ProximityPrompt")
 	interact(prompt)
 end
 
 function openCrates()
+	sendNoti("Opening crates...")
 	local boxes = game.Workspace.Map.ShadowBoxes:GetChildren()
 	for i = 1, #boxes do
 		if boxes[i]:FindFirstChild("Spacer") ~= nil then
@@ -77,14 +81,15 @@ function openCrates()
 		end
 	end
 end
-
+--[[
 function maskOn()
 	sendNoti("Putting Mask on...")
 	game:GetService("ReplicatedStorage").RS_Package.Assets.Remotes.MaskOn:FireServer(nil)
 	sendNoti("MaskOn")
 end
-
+]]--
 function lootSafes()
+	sendNoti("Looting safes...")
 	local child = game.Workspace.SafeSpots:GetChildren()
 	local safes = {}
 	for i = 1, #child do
@@ -104,6 +109,7 @@ function lootSafes()
 end
 
 function smallLoot()
+	sendNoti("Getting all small loot...")
 	local loot = game.Workspace.Lootables:GetChildren()
 	while #loot > 0 do
 		if loot[1].Name == "DepositGoldBar" then
@@ -116,6 +122,7 @@ function smallLoot()
 end
 
 function bigLoot()
+	sendNoti("Grabbing bags")
 	local loot = game.Workspace.BigLoot:GetChildren()
 	while #loot > 0 do
 		if loot[1].Name == "Coke" then
@@ -180,8 +187,13 @@ function tp(x,y,z)
 end
 
 function tpVan()
+	sendNoti("Getting in van...")
 	local pos = game.Workspace.BagSecuredArea.EscapeVan:FindFirstChild("MainMesh").Position
 	tp(pos.X, pos.Y, pos.Z)
+end
+
+function getSamuri()
+	sendNoti("Getting sammuri armor")
 end
 
 start()
