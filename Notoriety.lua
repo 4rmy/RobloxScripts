@@ -773,10 +773,80 @@ if _G.created ~= true then
 			end
 		end)
 
+		UnlimitedSkills.MouseButton1Down:connect(function()
+			for profile = 1, 3 do
+				for skill = 1, 20 do
+					for class = 1, 4 do
+						if skill == 1 then
+							v2 = "A"
+						elseif skill == 2 then
+							v2 = "B"
+						elseif skill == 3 then
+							v2 = "C"
+						elseif skill == 4 then
+							v2 = "D"
+						elseif skill == 5 then
+							v2 = "E"
+						elseif skill == 6 then
+							v2 = "F"
+						elseif skill == 7 then
+							v2 = "G"
+						elseif skill == 8 then
+							v2 = "H"
+						elseif skill == 9 then
+							v2 = "I"
+						elseif skill == 10 then
+							v2 = "J"
+						elseif skill == 11 then
+							v2 = "K"
+						elseif skill == 12 then
+							v2 = "L"
+						elseif skill == 13 then
+							v2 = "M"
+						elseif skill == 14 then
+							v2 = "N"
+						elseif skill == 15 then
+							v2 = "O"
+						elseif skill == 16 then
+							v2 = "P"
+						elseif skill == 17 then
+							v2 = "Q"
+						elseif skill == 18 then
+							v2 = "R"
+						elseif skill == 19 then
+							v2 = "S"
+						elseif skill == 20 then
+							v2 = "T"
+						end
+
+						if class == 1 then
+							v3 = "M"
+						elseif class == 2 then
+							v3 = "E"
+						elseif class == 3 then
+							v3 = "T"
+						elseif class == 4 then
+							v3 = "G"
+						end
+
+						local args = {
+							[1] = "Class " .. profile,
+							[2] = v2,
+							[3] = v3,
+							[4] = true
+						}
+						game:GetService("ReplicatedStorage").BuySkill:FireServer(unpack(args))
+					end
+				end
+			end
+		end)
+
 	-----[While Loops]-----
-		spawn(updateSpeed)
-		spawn(updateJump)
-		spawn(updateStamina)
+		if game.PlaceId ~= 21532277 then
+			spawn(updateSpeed)
+			spawn(updateJump)
+			spawn(updateStamina)
+		end
 end
 
 
